@@ -8,7 +8,7 @@ load_dotenv()
 auth = DiscordProvider(
     client_id='1481244802073890889',
     client_secret='7TZ6eeATl5UXKB3eIJJw0ZLg9KJlfj7X',
-    base_url='http://localhost:8000',
+    base_url='http://127.0.0.1:8000',
     required_scopes=["identify", "email", "guilds.join", "guilds"],
 )
 
@@ -34,5 +34,7 @@ async def get_user_info() -> dict:
         "avatar": token.claims.get("avatar"),
     }
 
-if __name__ == "__main__":
-    mcp.run(transport="http", port=8000)
+def main():
+    mcp.run(transport="streamable-http", port=8000)
+
+
