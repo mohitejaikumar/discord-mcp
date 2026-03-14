@@ -19,7 +19,7 @@ A Model Context Protocol (MCP) server that provides Discord integration via OAut
   - OAuth2 enabled
   - Bot token
   - Client ID and Client Secret
-  - Redirect URI set to `http://localhost:8000/callback` (for local development)
+  - Redirect URI set to `http://localhost:8000/auth/callback` (for local development)
 
 ## Discord App Setup
 
@@ -27,7 +27,7 @@ A Model Context Protocol (MCP) server that provides Discord integration via OAut
 2. Under **Bot**, click "Reset Token" to get your bot token. Save it.
 3. Under **OAuth2**, note the **Client ID** and **Client Secret**.
 4. Under **OAuth2 > Redirects**, add your callback URL:
-   - Local dev: `http://localhost:8788/callback`
+   - Local dev: `http://localhost:8000/auth/callback`
 5. Under **OAuth2 > Scopes**, ensure `identify` and `guilds` are selected.
 6. Under **Bot > Privileged Gateway Intents**, enable **Message Content Intent** if you want full message content in search results.
 
