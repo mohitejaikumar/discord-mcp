@@ -337,5 +337,8 @@ async def remove_role(guild_id: str, user_id: str, role_id: str) -> dict:
     return await bot_request("DELETE", f"/guilds/{guild_id}/members/{user_id}/roles/{role_id}")
 
 
+# ASGI app for deployment (Vercel, etc.)
+app = mcp.http_app(transport="streamable-http", stateless_http=True)
+
 if __name__ == "__main__":
     mcp.run(transport="streamable-http", port=8000)
