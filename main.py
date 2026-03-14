@@ -82,6 +82,16 @@ async def get_guild_member(guild_id: str) -> dict:
     return await discord_request(f"/users/@me/guilds/{guild_id}/member")
 
 
+# ── Bot Setup ──
+
+
+@mcp.tool
+async def get_bot_invite_url(permissions: int = 8) -> dict:
+    """Generate a URL to invite the bot to a Discord server. Default permissions=8 (Administrator). The server admin must open this URL and authorize the bot."""
+    url = f"https://discord.com/oauth2/authorize?client_id={CLIENT_ID}&permissions={permissions}&scope=bot"
+    return {"invite_url": url, "note": "A server admin must open this URL in a browser to add the bot to their server."}
+
+
 # ── Server Information ──
 
 
