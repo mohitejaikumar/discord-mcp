@@ -16,7 +16,7 @@ APP_URL = os.getenv("APP_URL")
 auth = DiscordProvider(
     client_id=CLIENT_ID,
     client_secret=CLIENT_SECRET,
-    base_url="http://localhost:8000",
+    base_url=APP_URL,
     required_scopes=["identify", "email", "guilds.join", "guilds", "guilds.members.read", "connections", "rpc"],
     require_authorization_consent=False,
 )
