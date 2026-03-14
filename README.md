@@ -75,6 +75,38 @@ Add the following to your Claude Desktop config (`~/Library/Application Support/
 
 On first connection, Claude Desktop will redirect you to Discord to authorize via OAuth.
 
+## Authentication Flow
+
+```mermaid
+sequenceDiagram
+    participant Client as MCP Client
+    participant Server as Discord MCP Server
+    participant Discord as Discord API
+
+    note over Client,Discord: OAuth Flow (one-time setup)
+    Client->>Server: Connect to /mcp
+    Server-->>Client: 401 — authenticate via OAuth
+    Client->>Server: /authorize
+    Server->>Discord: Redirect to Discord OAuth
+    Discord-->>Server: /callback with auth code
+    Server->>Discord: Exchange code for user OAuth token
+    Discord-->>Server: User OAuth token
+    Server-->>Client: Encrypted MCP token (contains user OAuth token)
+
+    note over Client,Discord: Tool Calls (ongoing)
+    Client->>Server: Tool call + MCP token (Bearer)
+    Server->>Server: Decrypt MCP token → extract user OAuth token
+    Server->>Discord: API call using user OAuth token (user-scoped tools)
+    Discord-->>Server: API response
+    Server->>Discord: API call using Bot token (bot-scoped tools)
+    Discord-->>Server: API response
+    Server-->>Client: Tool result
+```
+
+**Two types of API calls:**
+- **User OAuth tools** (`get_user_profile`, `get_user_guilds`, etc.) — use the authenticated user's OAuth token
+- **Bot tools** (`send_message`, `create_channel`, `manage_roles`, etc.) — use the Bot token from `.env`. The bot must be invited to the server separately.
+
 ## Available Tools
 
 | Tool | Description |
